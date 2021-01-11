@@ -21,12 +21,6 @@ jobs:
       - name: Install Datadog CI
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: -d --severity-threshold=high
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
           build-file: 'pom.xml'
