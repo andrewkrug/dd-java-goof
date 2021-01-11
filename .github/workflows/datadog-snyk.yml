@@ -30,7 +30,7 @@ jobs:
         with:
           build-file: 'pom.xml'
           service: 'javagoof'
-          version: 'v2.1'
+          version: '1.0'
           datadog-api-key: ${{ secrets.DD_API_KEY }}
           datadog-app-key: ${{ secrets.DD_APP_KEY }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}
