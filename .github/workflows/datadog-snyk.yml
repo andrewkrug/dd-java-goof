@@ -26,12 +26,6 @@ jobs:
       - name: Build artifacts with Maven
         run: mvn install
         shell: bash
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-11@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: -d --severity-threshold=high
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
           build-file: 'pom.xml'
