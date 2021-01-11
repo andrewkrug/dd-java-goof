@@ -2,9 +2,11 @@ FROM maven:3-jdk-8-slim
 
 RUN mkdir /usr/src/goof
 RUN mkdir /tmp/extracted_files
-COPY . /usr/src/goof
+ADD . /usr/src/goof/
 WORKDIR /usr/src/goof
 
+RUN ls -l /usr/src/goof
+# RUN rm -rf /usr/src/goof/cdk/
 RUN mvn install
 
 EXPOSE 8080

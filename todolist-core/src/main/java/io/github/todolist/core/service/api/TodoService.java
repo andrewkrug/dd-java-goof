@@ -29,7 +29,7 @@ import io.github.todolist.core.domain.Todo;
 import java.util.List;
 
 /**
- * Business interface for todo service.
+ * Business interface for todo service .
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
