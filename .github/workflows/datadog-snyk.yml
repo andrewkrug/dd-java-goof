@@ -4,7 +4,7 @@ env:
     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     DATADOG_API_KEY: ${{ secrets.DD_API_KEY }}
     DATADOG_APP_KEY: ${{ secrets.DD_APP_KEY }}
-    JAVA_HOME: /usr/local/openjdk-11
+    JAVA_HOME: /usr/local/openjdk-11 # Covers a bug in building this version of struts from this version of JDK
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
@@ -24,13 +24,13 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: Build artifacts with Maven
-        run: mvn install
+        run: mvn install # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
           build-file: 'pom.xml'
           service: 'javagoof'
-          version: '1.0'
+          version: '1.0' # Must align with the version in the CDK for everything to match up
           datadog-api-key: ${{ secrets.DD_API_KEY }}
           datadog-app-key: ${{ secrets.DD_APP_KEY }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}

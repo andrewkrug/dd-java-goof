@@ -58,6 +58,18 @@ DD_TAGS	String	Tags to apply to an uploaded profile. Must be a list of <key>:<va
 ```
 * Run the app: `mvn tomcat7:run`
 
+## Deploying on AWS Fargate
+
+1. Setup an AWS SSM Parameter in Parameter Store with your Datadog API Key.  Namespace it at: `/datadog/snyk_demo/dd_api_key`
+2. Setup AWS Credentials for your environment and region.
+3. Install the AWS CDK Cli
+4. cd cdk && cdk bootstrap && cdk deploy 
+5. Say yes to the prompts
+6. Telemetry, logs, traces, and profiles should start coming in
+7. Undeploy using `cdk destroy`
+
+> Note: This is a vulnerable application.  Do not allow open access to it in any account.  For demonstration purposes only.
+
 ## License
 This repo is available released under the [MIT License](http://opensource.org/licenses/mit-license.php/).
 # java-goof
