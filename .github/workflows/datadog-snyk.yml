@@ -1,7 +1,9 @@
 name: snyk-vulnerability-assessment
 on: push
-environment:
-    name: master
+env:
+    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    DATADOG_API_KEY: ${{ secrets.DD_API_KEY }}
+    DATADOG_API_KEY: ${{ secrets.DD_APP_KEY }}
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
