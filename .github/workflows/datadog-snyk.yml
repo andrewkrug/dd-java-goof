@@ -29,7 +29,7 @@ jobs:
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
           build-file: 'pom.xml'
-          service: 'javaGoof'
+          service: 'javagoof'
           version: 'v2.1'
           datadog-api-key: ${{ secrets.DD_API_KEY }}
           datadog-app-key: ${{ secrets.DD_APP_KEY }}
