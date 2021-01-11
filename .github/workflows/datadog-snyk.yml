@@ -4,6 +4,7 @@ env:
     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     DATADOG_API_KEY: ${{ secrets.DD_API_KEY }}
     DATADOG_APP_KEY: ${{ secrets.DD_APP_KEY }}
+    JAVA_HOME: /usr/local/openjdk-11
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
@@ -23,7 +24,7 @@ jobs:
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
+        uses: snyk/actions/maven-3-jdk-11@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
