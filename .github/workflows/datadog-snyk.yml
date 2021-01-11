@@ -14,7 +14,9 @@ jobs:
         with:
           node-version: 12.x
       - name: Install Datadog CI
-        run: npm install -g --save-dev @datadog/datadog-ci
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: npm install -g --save-dev @datadog/datadog-ci && echo $SNYK_TOKEN
         shell: bash
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
