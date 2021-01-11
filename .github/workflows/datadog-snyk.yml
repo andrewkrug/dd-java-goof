@@ -1,4 +1,5 @@
 on: push
+environment: master
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
@@ -14,9 +15,7 @@ jobs:
         with:
           node-version: 12.x
       - name: Install Datadog CI
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: npm install -g --save-dev @datadog/datadog-ci && echo $SNYK_TOKEN
+        run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
@@ -29,6 +28,6 @@ jobs:
           build-file: 'pom.xml'
           service: 'javaGoof'
           version: 'v2.1'
-          datadog-api-key: ${{ secrets.DATADOG_API_KEY }}
-          datadog-app-key: ${{ secrets.DATADOG_APP_KEY }}
+          datadog-api-key: ${{ secrets.DD_API_KEY }}
+          datadog-app-key: ${{ secrets.DD_APP_KEY }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}
