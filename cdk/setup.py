@@ -12,10 +12,16 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="author",
-    package_dir={"": "cdk"},
+    package_dir={"": "java_goof_ecs_construct"},
     packages=setuptools.find_packages(where="cdk"),
     install_requires=[
         "aws-cdk.core==1.83.0",
+        "aws-cdk.aws_ec2==1.83.0",
+        "aws-cdk.aws_ecs==1.83.0",
+        "aws-cdk.aws_iam==1.83.0",
+        "aws-cdk.aws_ecs_patterns==1.83.0",
+        "aws-cdk.aws_logs==1.83.0",
+        "aws-cdk.aws_ssm==1.83.0",
     ],
     python_requires=">=3.6",
     classifiers=[

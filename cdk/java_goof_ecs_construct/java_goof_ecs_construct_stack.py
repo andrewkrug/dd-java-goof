@@ -21,7 +21,6 @@ DATADOG_AGENT_VARS = dict(
     DD_VERSION=VERSION,
     DD_TAGS=DD_TAGS,
     DD_SERVICE=DD_SERVICE,
-    DD_API_KEY=dd_api_key,
     DD_APM_ENABLED="true",
     DD_APM_NON_LOCAL_TRAFFIC="true",
     ECS_FARGATE="true",
@@ -64,6 +63,8 @@ class CdkStack(core.Stack):
         dd_api_key = ssm.StringParameter.value_for_string_parameter(
             self, "/datadog/snyk_demo/dd_api_key", 1
         )
+
+        DATADOG_AGENT_VARS["DD_API_KEY"] = dd_api_key
 
         java_service_container = app_task.add_container(
             f"{APPLICATION_NAME}-java-app",
