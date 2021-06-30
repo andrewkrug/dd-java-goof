@@ -35,6 +35,35 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>io.snyk</groupId>
+                    <artifactId>snyk-maven-plugin</artifactId>
+                    <version>2.0.0</version>
+                    <inherited>false</inherited>
+                    <executions>
+                      <execution>
+                        <id>snyk-test</id>
+                        <goals>
+                          <goal>test</goal>
+                        </goals>
+                      </execution>
+                      <execution>
+                        <id>snyk-monitor</id>
+                        <goals>
+                          <goal>monitor</goal>
+                        </goals>
+                      </execution>
+                    </executions>
+                    <configuration>
+                      <apiToken>${env.SNYK_TOKEN}</apiToken>
+                      <skip>false</skip>
+                      <args>
+                        <arg>--print-deps</arg>
+                        <arg>--json</arg>
+                        <arg>--json-file-output=./deps.json</arg>
+                      </args>
+                    </configuration>
+                  </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.2</version>
@@ -74,6 +103,28 @@
                     <configuration>
                         <warFile>target/todolist.war</warFile>
                         <path>/</path>
+                    <extraDependencies>
+                        <dependency>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-api</artifactId>
+                            <version>1.7.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>jul-to-slf4j</artifactId>
+                            <version>1.7.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>ch.qos.logback</groupId>
+                            <artifactId>logback-classic</artifactId>
+                            <version>1.0.7</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>ch.qos.logback</groupId>
+                            <artifactId>logback-core</artifactId>
+                            <version>1.0.7</version>
+                        </dependency>
+                    </extraDependencies>
                     </configuration>
                 </plugin>
             </plugins>
