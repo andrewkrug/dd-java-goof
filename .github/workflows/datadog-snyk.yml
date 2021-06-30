@@ -24,7 +24,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Fix permissions
-        run: chmod 755 deps.json
+        run: sudo chmod 755 deps.json
         shell: bash
         continue-on-error: true
       - uses: datadog/github-action-vulnerability-analysis@v0.3
