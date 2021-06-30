@@ -31,6 +31,5 @@ jobs:
           build-file: 'pom.xml'
           service: 'javagoof'
           version: '1.0' # Must align with the version in the CDK for everything to match up
-          datadog-api-key: ${{ secrets.DD_API_KEY }}
-          datadog-app-key: ${{ secrets.DD_APP_KEY }}
-          snyk-token: ${{ secrets.SNYK_TOKEN }}
+          site: 'javagoof.demo'
+

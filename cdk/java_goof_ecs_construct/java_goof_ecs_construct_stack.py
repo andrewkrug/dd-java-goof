@@ -24,6 +24,7 @@ DATADOG_AGENT_VARS = dict(
     DD_APM_ENABLED="true",
     DD_APM_NON_LOCAL_TRAFFIC="true",
     ECS_FARGATE="true",
+    DD_LOGS_INJECTION="true"
 )
 
 APP_ENV_VARS = dict(
@@ -61,7 +62,7 @@ class CdkStack(core.Stack):
         )
 
         dd_api_key = ssm.StringParameter.value_for_string_parameter(
-            self, "/datadog/snyk_demo/dd_api_key", 1
+            self, "/datadog/snyk_demo/dd_api_key"
         )
 
         DATADOG_AGENT_VARS["DD_API_KEY"] = dd_api_key
