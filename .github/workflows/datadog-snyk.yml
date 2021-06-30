@@ -24,11 +24,11 @@ jobs:
       - name: Install Datadog CI
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
-      - name: Build artifacts with Maven
-        run: MAVEN_OPTS="--add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.desktop/java.awt.font=ALL-UNNAMED" mvn install -DskipTests 
-        # Artifacts must be pre-built in order to generate the dependency graph
-        shell: bash
+      - name: Compute dependency graph
+        run: docker run --entrypoint "" -e "SNYK_TOKEN=$SNYK_TOKEN" -v "$PWD:/project" snyk/snyk-cli:maven-3.6.3 bash -c 'cd /project && mvn install && snyk test --print-deps --json --file=/project/pom.xml > deps.json'
         continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: See if there is a deps
         run: cat deps.json 
         shell: bash
