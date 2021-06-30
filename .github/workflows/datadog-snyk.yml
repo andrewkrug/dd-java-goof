@@ -5,18 +5,12 @@ env:
     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     DATADOG_API_KEY: ${{ secrets.DD_API_KEY }}
     DATADOG_APP_KEY: ${{ secrets.DD_APP_KEY }}
-    JAVA_HOME: /usr/local/openjdk-11 # Covers a bug in building this version of struts from this version of JDK
 jobs:
     vulnerability_analysis:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-            java-version: 11.0.4
-            java-package: jdk
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -24,19 +18,13 @@ jobs:
       - name: Install Datadog CI
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
-      - name: Build artifacts with Maven
-        run: mvn install # Artifacts must be pre-built in order to generate the dependency graph
-        shell: bash
-        continue-on-error: true
       - name: Compute dependency graph
-        run: docker run -e "SNYK_TOKEN=$SNYK_TOKEN" -v "$PWD:/project" snyk/snyk-cli:maven-3.6.3_java11 test --print-deps --json --file=pom.xml > deps.json
+        run: docker run --entrypoint "" -e "SNYK_TOKEN=$SNYK_TOKEN" -v "$PWD:/project" snyk/snyk-cli:maven-3.6.3 bash -c 'cd /project && mvn install && snyk test --print-deps --json --file=/project/pom.xml > deps.json'
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      - name: See if there is a deps
-        run: ls 
+      - name: Fix permissions
+        run: sudo chmod 777 deps.json
         shell: bash
         continue-on-error: true
       - uses: datadog/github-action-vulnerability-analysis@v0.3
@@ -44,6 +32,3 @@ jobs:
           build-file: 'pom.xml'
           service: 'javagoof'
           version: '1.0' # Must align with the version in the CDK for everything to match up
-          datadog-api-key: ${{ secrets.DD_API_KEY }}
-          datadog-app-key: ${{ secrets.DD_APP_KEY }}
-          snyk-token: ${{ secrets.SNYK_TOKEN }}

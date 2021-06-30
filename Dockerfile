@@ -15,4 +15,3 @@ RUN wget -O dd-java-agent.jar 'https://repository.sonatype.org/service/local/art
 EXPOSE 8080
 
 CMD /usr/src/goof/start-script.sh
-

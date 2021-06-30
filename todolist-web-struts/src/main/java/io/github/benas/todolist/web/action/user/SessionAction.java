@@ -59,7 +59,6 @@ public class SessionAction extends BaseAction {
         if (userService.login(loginForm.getEmail(), loginForm.getPassword())) {
             User user = userService.getUserByEmail(loginForm.getEmail());
             session.put(TodoListUtils.SESSION_USER, user);
-            LOGGER.info("A user has logged in using a session and user.email=");
             return Action.SUCCESS;
         } else {
             error = getText("login.error.global.invalid");
