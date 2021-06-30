@@ -28,7 +28,18 @@ jobs:
         run: mvn install # Artifacts must be pre-built in order to generate the dependency graph
         shell: bash
         continue-on-error: true
-      - uses: datadog/github-action-vulnerability-analysis@master
+      - name: Compute dependency graph
+        run: docker run -e "SNYK_TOKEN=$SNYK_TOKEN" -v "$PWD:/project" snyk/snyk-cli:maven-3.6.3_java11 test --print-deps --json --file=pom.xml > deps.json
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: See if there is a deps
+        run: ls 
+        shell: bash
+        continue-on-error: true
+      - uses: datadog/github-action-vulnerability-analysis@v0.3
         with:
           build-file: 'pom.xml'
           service: 'javagoof'
